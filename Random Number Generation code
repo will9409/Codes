@@ -1,0 +1,7 @@
+unsigned short myrandom(unsigned short n)
+{
+  static unsigned int rand = 0;
+
+  rand = rand * 1103515245 + 12345;
+  return (unsigned short) ((rand / 65536) % n);
+}

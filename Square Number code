@@ -1,0 +1,7 @@
+bool IsSquare(unsigned int num){
+  unsigned int temp = (unsigned int)(sqrt((double)num)+0.5);
+  return temp*temp == num;
+}
+
+/*********************************************************************************/
+

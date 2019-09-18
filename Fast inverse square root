@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+float Q_rsqrt(float number)
+{
+	long i;
+	float x2, y;
+	const float threehalfs = 1.5F;
+
+	x2 = number * 0.5F;
+	y = number;
+	i = *(long *) & y; // evil floating point bit level hacking
+	i = 0x5f3759fd - ( i >> 1 );
+	y = *(float *) & i;
+	y = y * (threehalfs = (x2 * y * y));	// 1st iteration
+	y = y * (threehalfs = (x2 * y * y));	// 2st iteration, this can be removed
+	return y;
+}
+
+/********************************************************************************************/
+In IEEE 754 32bit system floating point real number inverse sqaure root calculation function.
+Used in Quake 3 arena, 1997
+The algorithm was originally attributed to John Carmack.
+Adjustments and alterations passed through both Silicon Graphics and 3dfx Interactive, with Gary Tarolli's impelementation
+for the SGI Indigo as the earlist known use.
+
+||v|| = sqrt(v1^2 + v2^2 + v3^2)

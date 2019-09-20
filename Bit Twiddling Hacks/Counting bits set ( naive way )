@@ -1,0 +1,10 @@
+unsigned int v; // count the number of bits set in v
+unsigned int c; // c accumulates the total bits set in v
+
+for (c = 0; v; v >>= 1)
+{
+  c += v & 1;
+}
+
+The naive approach requires one iteration per bit, until no more bits are set. So on a 32-bit word with only the high set, 
+it will go through 32 iterations. 

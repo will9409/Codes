@@ -1,0 +1,11 @@
+unsigned int v;       // word value to compute the parity of
+bool parity = false;  // parity will be the parity of v
+
+while (v)
+{
+  parity = !parity;
+  v = v & (v - 1);
+}
+
+The above code uses an approach like Brian Kernigan's bit counting, above. The time it takes is proportional to the number of
+bits set. 

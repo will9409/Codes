@@ -1,0 +1,31 @@
+unsigned int v; // 32-bit word to reverse bit order
+
+// swap odd and even bits
+v = ((v >> 1) & 0x55555555) | ((v & 0x55555555) << 1);
+// swap consecutive pairs
+v = ((v >> 2) & 0x33333333) | ((v & 0x33333333) << 2);
+// swap nibbles ... 
+v = ((v >> 4) & 0x0F0F0F0F) | ((v & 0x0F0F0F0F) << 4);
+// swap bytes
+v = ((v >> 8) & 0x00FF00FF) | ((v & 0x00FF00FF) << 8);
+// swap 2-byte long pairs
+v = ( v >> 16             ) | ( v               << 16);
+
+The following variation is also O(lg(N)), however it requires more operations to reverse v. Its virtue is in taking less 
+slightly memory by computing the constants on the fly.
+
+unsigned int s = sizeof(v) * CHAR_BIT; // bit size; must be power of 2 
+unsigned int mask = ~0;         
+while ((s >>= 1) > 0) 
+{
+  mask ^= (mask << s);
+  v = ((v >> s) & mask) | ((v << s) & ~mask);
+}
+
+These methods above are best suited to situations where N is large. If you use the above with 64-bit ints (or larger), then 
+you need to add more lines (following the pattern); otherwise only the lower 32 bits will be reversed and the result will be 
+in the lower 32 bits.
+
+See Dr. Dobb's Journal 1983, Edwin Freed's article on Binary Magic Numbers for more information. The second variation was 
+suggested by Ken Raeburn on September 13, 2005. Veldmeijer mentioned that the first version could do without ANDS in the last
+line on March 19, 2006. 

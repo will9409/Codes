@@ -1,0 +1,6 @@
+ Reverse the bits in a byte with 7 operations (no 64-bit):
+
+b = ((b * 0x0802LU & 0x22110LU) | (b * 0x8020LU & 0x88440LU)) * 0x10101LU >> 16; 
+
+Make sure you assign or cast the result to an unsigned char to remove garbage in the higher bits. Devised by Sean Anderson, 
+July 13, 2001. Typo spotted and correction supplied by Mike Keith, January 3, 2002.
